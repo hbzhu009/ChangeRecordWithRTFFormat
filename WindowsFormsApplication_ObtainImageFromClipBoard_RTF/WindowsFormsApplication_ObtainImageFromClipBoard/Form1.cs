@@ -18,6 +18,7 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             InitializeComponent();
 
             richTextBox1.AllowDrop = true;
+
             richTextBox1.DragDrop += RichTextBox1_DragDrop;
             richTextBox1.DragEnter += RichTextBox1_DragEnter;
             richTextBox1.MouseDown += RichTextBox1_MouseDown;
@@ -103,31 +104,52 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
         private void SaveToRTF_Click(object sender, EventArgs e)
         {
             //string RTFpath = @"C:\Work\Programming\C#\WindowsFormsApplication_ObtainImageFromClipBoard\Figures\temp.rtf";
+            richTextBox1.AppendText(appendInfo());
+
             richTextBox1.SaveFile(RTFpath);
+            
+
         }
 
         private void LoadFromRTF_Click(object sender, EventArgs e)
         {
             richTextBox1.LoadFile(RTFpath);
-            richTextBox1.AppendText(appendInfo());
-            
+
         }
 
         private void LaunchRTF_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(RTFpath);
+        }
+
+
+        //add tag in the ending
+        private string appendInfo()
+        {
+            //add date and operation
+            string strTime = DateTime.Now.ToString("yyyy-MM-dd / HH:mm:ss");
+            string userName = "xMan";
+
+            string space = new string(' ', 10);
+
+            return "\n"+ space+strTime + "  "+userName +AddMark();
 
         }
 
 
-        //add tag by default.
-        private string appendInfo()
+        //add mark as starter
+        private string AddMark()
         {
-            
-            string strTime = DateTime.Now.ToString("yyyy-MM-dd / HH:mm:ss");
-            string userName = "xMan";
+            string strSingleMark = "-";
+            int nRepeat = 50;
+            string strMark = string.Empty;
 
-            return "\n"+strTime + "  "+userName;
+            for (int i = 0; i < nRepeat; i++)
+            {
+                strMark += strSingleMark;
+            }
+
+            return "\n" + strMark + "\n";
 
         }
 
@@ -136,7 +158,31 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             int index = richTextBox1.Text.IndexOf("CatchMe");
             //richTextBox1.Cursor = Cursors.
 
-            MessageBox.Show("I'm at " +index.ToString());
+            MessageBox.Show("I'm at " + index.ToString());
+
+            string txtWord = "CatchMe";
+
+
+
+            for (int i = 0; i < richTextBox1.TextLength; i++)
+            {
+                richTextBox1.Find(txtWord.Trim(), i, RichTextBoxFinds.WholeWord);
+                richTextBox1.SelectionColor = Color.Red;
+                richTextBox1.SelectionBackColor = Color.Yellow;
+            }
+
+            int count = 0;
+            for (int i = 0; i < richTextBox1.Text.Split(' ').Length; i++)
+            {
+                if (richTextBox1.Text.Split(' ')[i].Trim().ToLower() == txtWord.Trim())
+                {
+                    count = count + 1;
+                }
+            }
+            MessageBox.Show(count.ToString());
+            // lblCount.Text = count.ToString();
+
         }
+       
     }
 }

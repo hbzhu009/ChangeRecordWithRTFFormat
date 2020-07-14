@@ -62,9 +62,9 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(339, 36);
+            this.richTextBox1.Location = new System.Drawing.Point(339, 48);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(539, 568);
+            this.richTextBox1.Size = new System.Drawing.Size(695, 749);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             // 
@@ -72,7 +72,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(335, 9);
+            this.label1.Location = new System.Drawing.Point(335, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 24);
             this.label1.TabIndex = 3;
@@ -80,7 +80,7 @@
             // 
             // SaveToRTF
             // 
-            this.SaveToRTF.Location = new System.Drawing.Point(671, 7);
+            this.SaveToRTF.Location = new System.Drawing.Point(671, 19);
             this.SaveToRTF.Name = "SaveToRTF";
             this.SaveToRTF.Size = new System.Drawing.Size(75, 23);
             this.SaveToRTF.TabIndex = 4;
@@ -90,7 +90,7 @@
             // 
             // LoadFromRTF
             // 
-            this.LoadFromRTF.Location = new System.Drawing.Point(523, 7);
+            this.LoadFromRTF.Location = new System.Drawing.Point(523, 19);
             this.LoadFromRTF.Name = "LoadFromRTF";
             this.LoadFromRTF.Size = new System.Drawing.Size(89, 23);
             this.LoadFromRTF.TabIndex = 5;
@@ -100,11 +100,11 @@
             // 
             // LaunchRTF
             // 
-            this.LaunchRTF.Location = new System.Drawing.Point(803, 7);
+            this.LaunchRTF.Location = new System.Drawing.Point(803, 4);
             this.LaunchRTF.Name = "LaunchRTF";
-            this.LaunchRTF.Size = new System.Drawing.Size(75, 23);
+            this.LaunchRTF.Size = new System.Drawing.Size(82, 38);
             this.LaunchRTF.TabIndex = 6;
-            this.LaunchRTF.Text = "LaunchRTF";
+            this.LaunchRTF.Text = "LaunchRTFWithWordPad";
             this.LaunchRTF.UseVisualStyleBackColor = true;
             this.LaunchRTF.Click += new System.EventHandler(this.LaunchRTF_Click);
             // 
@@ -118,7 +118,7 @@
             // 
             // Search
             // 
-            this.Search.Location = new System.Drawing.Point(913, 52);
+            this.Search.Location = new System.Drawing.Point(1040, 48);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(75, 23);
             this.Search.TabIndex = 8;
@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 633);
+            this.ClientSize = new System.Drawing.Size(1118, 809);
             this.Controls.Add(this.Search);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.LaunchRTF);
