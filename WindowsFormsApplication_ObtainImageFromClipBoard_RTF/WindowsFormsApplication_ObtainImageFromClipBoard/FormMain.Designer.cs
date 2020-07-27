@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication_ObtainImageFromClipBoard
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -37,6 +37,10 @@
             this.LaunchRTF = new System.Windows.Forms.Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.Search = new System.Windows.Forms.Button();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.totalResult = new System.Windows.Forms.Label();
+            this.Results = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pB_showImg)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,19 +122,57 @@
             // 
             // Search
             // 
-            this.Search.Location = new System.Drawing.Point(1040, 48);
+            this.Search.Location = new System.Drawing.Point(0, 0);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(75, 23);
-            this.Search.TabIndex = 8;
-            this.Search.Text = "Search";
-            this.Search.UseVisualStyleBackColor = true;
-            this.Search.Click += new System.EventHandler(this.Search_Click);
+            this.Search.TabIndex = 11;
             // 
-            // Form1
+            // SearchTextBox
+            // 
+            this.SearchTextBox.Location = new System.Drawing.Point(1118, 86);
+            this.SearchTextBox.Multiline = true;
+            this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.Size = new System.Drawing.Size(100, 45);
+            this.SearchTextBox.TabIndex = 9;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(1055, 98);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 20);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "search";
+            // 
+            // totalResult
+            // 
+            this.totalResult.AutoSize = true;
+            this.totalResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalResult.Location = new System.Drawing.Point(1124, 158);
+            this.totalResult.Name = "totalResult";
+            this.totalResult.Size = new System.Drawing.Size(0, 20);
+            this.totalResult.TabIndex = 12;
+            // 
+            // Results
+            // 
+            this.Results.AutoSize = true;
+            this.Results.Location = new System.Drawing.Point(1182, 158);
+            this.Results.Name = "Results";
+            this.Results.Size = new System.Drawing.Size(42, 13);
+            this.Results.TabIndex = 13;
+            this.Results.Text = "Results";
+            // 
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1118, 809);
+            this.ClientSize = new System.Drawing.Size(1251, 809);
+            this.Controls.Add(this.Results);
+            this.Controls.Add(this.totalResult);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.Search);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.LaunchRTF);
@@ -140,7 +182,7 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.ShowImgFromClipBoard);
             this.Controls.Add(this.pB_showImg);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pB_showImg)).EndInit();
             this.ResumeLayout(false);
@@ -159,6 +201,10 @@
         private System.Windows.Forms.Button LaunchRTF;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.Button Search;
+        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label totalResult;
+        private System.Windows.Forms.Label Results;
     }
 }
 

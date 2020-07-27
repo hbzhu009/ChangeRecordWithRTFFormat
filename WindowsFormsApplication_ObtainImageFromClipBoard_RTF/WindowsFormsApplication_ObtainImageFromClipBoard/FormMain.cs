@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace WindowsFormsApplication_ObtainImageFromClipBoard
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
-        public string RTFpath = @"C:\Work\Programming\C#\WindowsFormsApplication_ObtainImageFromClipBoard_RTF\Figures\temp.rtf";
-        public Form1()
+        public string RTFpath;
+
+        public FormMain()
         {
             InitializeComponent();
 
@@ -25,6 +28,12 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
 
             richTextBox1.Multiline = true;
             richTextBox1.WordWrap = false;
+
+
+            //setup the file folder under the application
+            DirectoryInfo RootFolder = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            RTFpath = RootFolder.Parent.Parent.Parent.FullName + "\\Figures\\temp.rtf"; 
+           
             
 
         }
@@ -153,36 +162,87 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
 
         }
 
-        private void Search_Click(object sender, EventArgs e)
+        
+
+
+
+        //search specified text
+        private void searchTxt(string txtWord)
         {
-            int index = richTextBox1.Text.IndexOf("CatchMe");
+            //string txtWord = "CatchMe";
+            int index = richTextBox1.Text.IndexOf(txtWord);
             //richTextBox1.Cursor = Cursors.
 
-            MessageBox.Show("I'm at " + index.ToString());
+            //MessageBox.Show("I'm at " + index.ToString());
 
-            string txtWord = "CatchMe";
+            //clear previous format
+            clearFormat();
 
-
-
+            List<int> resultIndexList = new List<int>();
             for (int i = 0; i < richTextBox1.TextLength; i++)
             {
-                richTextBox1.Find(txtWord.Trim(), i, RichTextBoxFinds.WholeWord);
-                richTextBox1.SelectionColor = Color.Red;
-                richTextBox1.SelectionBackColor = Color.Yellow;
+                int resultIndex = richTextBox1.Find(txtWord.Trim(), i, RichTextBoxFinds.None);
+                if (resultIndex != -1)
+                {                    
+                    richTextBox1.SelectionColor = Color.Red;
+                    richTextBox1.SelectionBackColor = Color.Yellow;
+
+                    if (resultIndexList.Count == 0)
+                        resultIndexList.Add(resultIndex);
+                    else
+                    {
+                        if(resultIndex != resultIndexList[resultIndexList.Count-1])
+                            resultIndexList.Add(resultIndex);
+                    }
+                }
             }
 
+            totalResult.Text = resultIndexList.Count.ToString();
+
             int count = 0;
-            for (int i = 0; i < richTextBox1.Text.Split(' ').Length; i++)
+            char[] splitter = {' ', '\n' };
+            string[] strArr = richTextBox1.Text.Split(splitter);
+            //int test = richTextBox1.Text.Split(splitter).Length;
+
+            for (int i = 0; i < strArr.Length; i++)
             {
-                if (richTextBox1.Text.Split(' ')[i].Trim().ToLower() == txtWord.Trim())
+                //string test2 = richTextBox1.Text.Split(' ')[i];
+
+                if (strArr[i].Trim().ToLower() == txtWord.Trim().ToLower())
                 {
                     count = count + 1;
                 }
             }
-            MessageBox.Show(count.ToString());
+
+            
+            //MessageBox.Show(count.ToString());
             // lblCount.Text = count.ToString();
 
         }
-       
+
+
+        //clear the format
+        private void clearFormat()
+        {
+            richTextBox1.SelectAll();
+            richTextBox1.SelectionColor = Color.Black;
+            richTextBox1.SelectionBackColor = Color.White;
+        }
+
+        //text change function
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (SearchTextBox.Text == "")
+            {
+                totalResult.Text = "0";
+                clearFormat();
+            }
+            else
+            {
+               searchTxt(SearchTextBox.Text);
+
+            }
+        }
+
     }
 }
