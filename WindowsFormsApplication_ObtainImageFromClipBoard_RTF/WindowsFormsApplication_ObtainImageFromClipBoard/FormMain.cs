@@ -21,10 +21,10 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             InitializeComponent();
 
             richTextBox1.AllowDrop = true;
-
+            
             richTextBox1.DragDrop += RichTextBox1_DragDrop;
             richTextBox1.DragEnter += RichTextBox1_DragEnter;
-            richTextBox1.MouseDown += RichTextBox1_MouseDown;
+            //richTextBox1.MouseDown += RichTextBox1_MouseDown;
 
             richTextBox1.Multiline = true;
             richTextBox1.WordWrap = false;
@@ -79,15 +79,17 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
                 richTextBox1.Paste(dataFormat);
         }
 
+
         //release mouse to complete this operation
-        private void RichTextBox1_MouseDown(object sender, MouseEventArgs e)
+        //change the method from right-click event to clipboard.
+        private void PasteImage()
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            //if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 if (Clipboard.ContainsImage())
                 {
-                    var confirmRes = MessageBox.Show("Sure to paste?", "Confirm paste!", MessageBoxButtons.YesNo);
-                    if (confirmRes == DialogResult.Yes)
+                    //var confirmRes = MessageBox.Show("Sure to paste?", "Confirm paste!", MessageBoxButtons.YesNo);
+                    //if (confirmRes == DialogResult.Yes)
                     {
                         DataFormats.Format dataFormat = DataFormats.GetFormat(DataFormats.Bitmap);
                         if (richTextBox1.CanPaste(dataFormat))
@@ -96,10 +98,7 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
                         //clear the clip board after paste
                         Clipboard.Clear();
                     }
-                    else
-                    {
-                        //do nothing
-                    }
+                    
                    
                 }
                 else
@@ -112,9 +111,17 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
 
         private void SaveToRTF_Click(object sender, EventArgs e)
         {
-            //string RTFpath = @"C:\Work\Programming\C#\WindowsFormsApplication_ObtainImageFromClipBoard\Figures\temp.rtf";
-            richTextBox1.AppendText(appendInfo());
+            //string RTFpath = @"C:\Work\Programming\C#\WindowsFormsApplication_ObtainImageFromClipBoard\Figures\temp.rtf";            
+            //string test = richTextBox1.Text.Trim();
 
+            if (!richTextBox1.Text.Trim().EndsWith(AddMark().Substring(0,AddMark().Length/2)))//new change item added, sometimes only update some old items.
+            {
+                richTextBox1.AppendText(appendInfo());
+            }
+
+            //there might be some text copied from script or other source
+            //so before save, format all the text to default font.
+            clearFormat();
             richTextBox1.SaveFile(RTFpath);
             
 
@@ -123,7 +130,7 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
         private void LoadFromRTF_Click(object sender, EventArgs e)
         {
             richTextBox1.LoadFile(RTFpath);
-
+            clearFormat();
         }
 
         private void LaunchRTF_Click(object sender, EventArgs e)
@@ -139,9 +146,10 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             string strTime = DateTime.Now.ToString("yyyy-MM-dd / HH:mm:ss");
             string userName = "xMan";
 
-            string space = new string(' ', 10);
+            int spaceNum = 30;
+            string space = new string(' ', spaceNum);
 
-            return "\n"+ space+strTime + "  "+userName +AddMark();
+            return "\n"+ space+strTime + "  "+userName +"\n"+AddMark()+"\n";
 
         }
 
@@ -149,8 +157,8 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
         //add mark as starter
         private string AddMark()
         {
-            string strSingleMark = "-";
-            int nRepeat = 50;
+            string strSingleMark = "+";
+            int nRepeat = 40;
             string strMark = string.Empty;
 
             for (int i = 0; i < nRepeat; i++)
@@ -158,7 +166,7 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
                 strMark += strSingleMark;
             }
 
-            return "\n" + strMark + "\n";
+            return strMark;
 
         }
 
@@ -227,6 +235,8 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             richTextBox1.SelectAll();
             richTextBox1.SelectionColor = Color.Black;
             richTextBox1.SelectionBackColor = Color.White;
+            Font defaultFont = new Font("Microsoft YaHei", 12); ;
+            richTextBox1.SelectionFont = defaultFont;
         }
 
         //text change function
@@ -244,5 +254,29 @@ namespace WindowsFormsApplication_ObtainImageFromClipBoard
             }
         }
 
+        private void RestoreFormat_Click(object sender, EventArgs e)
+        {
+            clearFormat();
+
+        }
+
+        private void InsertImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG;*.TIF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIF|All files (*.*)|*.*"; //set anticipated file type.
+                                                          //  Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*
+            ofd.FilterIndex = 1;
+            ofd.Multiselect = false;
+            var dialogResult = ofd.ShowDialog();
+            //load the image to clipboard, and paste in the richtextbox.
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                Bitmap img = new Bitmap(ofd.FileName);
+                //var obj = Clipboard.GetDataObject();              
+                Clipboard.SetDataObject(img);
+                PasteImage();            
+            }            
+
+        }
     }
 }
